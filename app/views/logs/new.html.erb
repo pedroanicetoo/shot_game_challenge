@@ -1,0 +1,11 @@
+<%= form_with model: @log do |form| %>
+  <%= form.file_field :log_file %>
+  <%= form.submit %>
+<% end %>
+<h1 style="color: green"><%= flash[:success] %></h1>
+<h1 style="color: red"><%= flash[:error] %></h1>
+<% if flash[:log_line] %>
+  <% flash[:log_line].map do |line| %>
+    <h4><%= line %></h4>
+  <% end %>
+<% end %>
