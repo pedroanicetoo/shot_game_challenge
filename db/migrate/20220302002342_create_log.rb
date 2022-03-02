@@ -3,7 +3,6 @@ class CreateLog < ActiveRecord::Migration[6.1]
     create_table :logs do |t|
       t.text :file_text
       t.date :moment
-      t.integer :type, default: 0
       t.integer :match_id
       t.integer :murder_id
       t.integer :victim_id
