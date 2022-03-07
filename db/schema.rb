@@ -10,22 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_02_002342) do
+ActiveRecord::Schema.define(version: 2022_03_02_030358) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "logs", force: :cascade do |t|
     t.text "file_text"
     t.date "moment"
-    t.integer "type", default: 0
-    t.integer "match_id"
-    t.integer "murder_id"
-    t.integer "victim_id"
+    t.bigint "match_id"
+    t.bigint "murder_id"
+    t.bigint "victim_id"
     t.string "death_reason"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "kind", default: 0, null: false
+    t.index ["kind"], name: "index_logs_on_kind"
+    t.index ["match_id"], name: "index_logs_on_match_id"
+    t.index ["murder_id"], name: "index_logs_on_murder_id"
+    t.index ["victim_id"], name: "index_logs_on_victim_id"
+  end
+
+  create_table "matches", force: :cascade do |t|
+    t.string "title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "players", force: :cascade do |t|
-    t.string "name"
+    t.string "nick"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
