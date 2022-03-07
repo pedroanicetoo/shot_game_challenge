@@ -1,5 +1,9 @@
+# frozen_string_literal: true
+
 class LogsController < ApplicationController
+
   def new
+    @matches = Match.all
     @log = Log.new
   end
 
@@ -8,10 +12,14 @@ class LogsController < ApplicationController
     if action
       flash[:success] = "Log successfully created"
       flash[:log_line] = action
-      redirect_to root_path
+      redirect_to new_log_path
     else
       flash[:error] = "Something went wrong"
-      redirect_to root_path
+      redirect_to new_log_path
     end
+  rescue ArgumentError => e
+    flash[:error] = e.message
+    redirect_to new_log_path
   end
+
 end

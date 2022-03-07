@@ -2,10 +2,36 @@
   <%= form.file_field :log_file %>
   <%= form.submit %>
 <% end %>
+
+
 <h1 style="color: green"><%= flash[:success] %></h1>
 <h1 style="color: red"><%= flash[:error] %></h1>
-<% if flash[:log_line] %>
-  <% flash[:log_line].map do |line| %>
-    <h4><%= line %></h4>
+
+<% if @matches %>
+  <% @matches.all.map do |match| %>
+    <h2>Partida: <%= match.title %></h2>
+    <h3>Logs</h3>
+    <table>
+      <thead>
+        <th>Ação</th>
+        <th>Momento</th>
+        <th>Assassino</th>
+        <th>Vitima</th>
+        <th>Causa</th>
+      </thead>
+      <tbody>
+        <% if match.logs.present? %>
+          <% match.logs.map do |log| %>
+            <tr>
+              <td><%= log.kind %></td>
+              <td><%= log.moment %></td>
+              <td><%= log.try(:murder).try(:nick) %></td>
+              <td><%= log.try(:victim).try(:nick) %></td>
+              <td><%= log.death_reason %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
   <% end %>
 <% end %>
